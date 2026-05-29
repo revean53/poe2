@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg-color: #0b0c10;
+  --panel-bg: rgba(22, 23, 27, 0.85);
+  --text-primary: #e0e0e0;
+  --text-secondary: #9a9a9a;
+  --accent-gold: #c5a059;
+  --accent-gold-hover: #e0b86a;
+  --accent-red: #8b0000;
+  --accent-green: #3dd68c;
+  --accent-green-dim: rgba(61, 214, 140, 0.15);
+  --accent-green-border: rgba(61, 214, 140, 0.4);
+  --border-color: rgba(197, 160, 89, 0.2);
+  --glow: 0 0 10px rgba(197, 160, 89, 0.3);
+  --glow-green: 0 0 10px rgba(61, 214, 140, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  height: 100vh;
+  overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .brand-title {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+}
+
+/* ======================== LAYOUT ======================== */
+.app-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: radial-gradient(circle at center, #1a1b21 0%, #0b0c10 100%);
+}
+
+/* ======================== SIDEBAR ======================== */
+.sidebar {
+  width: 320px;
+  min-width: 320px;
+  background: var(--panel-bg);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+}
+
+.sidebar-header {
+  padding: 1.8rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.sidebar-header h1 {
+  color: var(--accent-gold);
+  font-size: 1.4rem;
+  text-shadow: var(--glow);
+  margin-bottom: 0.4rem;
+}
+
+.sidebar-header p {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.map-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.map-list::-webkit-scrollbar {
+  width: 5px;
+}
+.map-list::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2);
+}
+.map-list::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+/* Act Section */
+.act-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.9rem 1.5rem;
+  cursor: pointer;
+  background: rgba(0,0,0,0.25);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--accent-gold);
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: background 0.2s ease;
+  user-select: none;
+}
+.act-header:hover {
+  background: rgba(0,0,0,0.4);
+}
+
+/* Map Item */
+.map-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+  gap: 8px;
+}
+
+.map-item:hover {
+  background: rgba(197, 160, 89, 0.05);
+  border-left-color: rgba(197, 160, 89, 0.5);
+}
+
+.map-item.active {
+  background: linear-gradient(90deg, rgba(197, 160, 89, 0.15) 0%, transparent 100%);
+  border-left-color: var(--accent-gold);
+}
+
+/* Completed map - green glow */
+.map-item.completed {
+  border-left-color: var(--accent-green) !important;
+  background: linear-gradient(90deg, var(--accent-green-dim) 0%, transparent 100%);
+}
+.map-item.completed .map-name {
+  color: var(--accent-green);
+}
+.map-item.completed .map-number {
+  color: var(--accent-green);
+  opacity: 1;
+  text-shadow: var(--glow-green);
+}
+
+.map-number {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  color: var(--accent-gold);
+  font-weight: 600;
+  min-width: 26px;
+  opacity: 0.7;
+}
+
+.map-item.active .map-number {
+  opacity: 1;
+  text-shadow: var(--glow);
+}
+
+.map-name {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.3s ease;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.map-item.active .map-name,
+.map-item:hover .map-name {
+  color: var(--text-primary);
+}
+
+/* Completion badge */
+.map-badge {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.05);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+  white-space: nowrap;
+}
+.map-badge.badge-done {
+  background: var(--accent-green-dim);
+  border-color: var(--accent-green-border);
+  color: var(--accent-green);
+  display: flex;
+  align-items: center;
+}
+
+/* ======================== MAIN CONTENT ======================== */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 1.2rem 1.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.current-map-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.8rem;
+  color: #fff;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.9);
+}
+
+.controls {
+  pointer-events: auto;
+  display: flex;
+  gap: 0.4rem;
+  background: var(--panel-bg);
+  backdrop-filter: blur(8px);
+  padding: 0.4rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.control-btn {
+  background: transparent;
+  border: none;
+  color: var(--accent-gold);
+  width: 38px;
+  height: 38px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.control-btn:hover {
+  background: rgba(197, 160, 89, 0.1);
+  color: var(--accent-gold-hover);
+}
+
+/* ======================== VIEWER ======================== */
+.viewer-container {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  background: #050508;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.viewer-container:active {
+  cursor: grabbing;
+}
+
+.map-image {
+  max-width: none;
+}
+
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-secondary);
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+}
+
+/* ======================== IMAGE TABS ======================== */
+.image-tabs {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.8rem;
+  z-index: 20;
+  pointer-events: auto;
+  background: var(--panel-bg);
+  padding: 0.4rem;
+  border-radius: 30px;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(8px);
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  padding: 0.45rem 1.3rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.tab-btn:hover {
+  color: var(--text-primary);
+}
+.tab-btn.active {
+  background: rgba(197, 160, 89, 0.1);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+/* ======================== REWARDS PANEL ======================== */
+.rewards-panel {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 380px;
+  max-height: 45vh;
+  background: rgba(14, 15, 19, 0.92);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  z-index: 25;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rewards-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.rewards-header h3 {
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  font-family: 'Cinzel', serif;
+}
+
+.rewards-progress {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  background: rgba(255,255,255,0.05);
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.rewards-list {
+  overflow-y: auto;
+  padding: 0.5rem 0;
+}
+.rewards-list::-webkit-scrollbar {
+  width: 4px;
+}
+.rewards-list::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+/* Reward Row */
+.reward-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.7rem 1.2rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+.reward-row:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+/* Checkbox */
+.reward-checkbox {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 6px;
+  border: 2px solid rgba(197, 160, 89, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  color: transparent;
+}
+.reward-checkbox.checked {
+  background: var(--accent-green);
+  border-color: var(--accent-green);
+  color: #fff;
+  box-shadow: 0 0 8px rgba(61, 214, 140, 0.4);
+}
+
+/* Reward icon by type */
+.reward-icon {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+.reward-icon.type-buff {
+  background: rgba(74, 144, 226, 0.15);
+  color: #4a90e2;
+}
+.reward-icon.type-gem {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+}
+.reward-icon.type-passive {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+.reward-icon.type-item {
+  background: rgba(197, 160, 89, 0.15);
+  color: var(--accent-gold);
+}
+.reward-icon.type-unlock {
+  background: rgba(61, 214, 140, 0.15);
+  color: var(--accent-green);
+}
+
+/* Reward info text */
+.reward-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+.reward-source {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.reward-value {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Completed reward row */
+.reward-row.reward-done .reward-source,
+.reward-row.reward-done .reward-value {
+  opacity: 0.45;
+  text-decoration: line-through;
+  text-decoration-color: rgba(255,255,255,0.2);
+}
+.reward-row.reward-done .reward-icon {
+  opacity: 0.35;
+}
